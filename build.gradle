@@ -1,0 +1,33 @@
+plugins {
+    id 'war'
+    id 'frontend'
+    id 'dev-server'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'javax.servlet:javax.servlet-api:4.0.1'
+    implementation 'javax.servlet:jstl:1.2'
+}
+
+testing {
+    suites {
+        test {
+            useJUnitJupiter('5.8.2')
+        }
+    }
+}
+
+frontend {
+    frontendDir layout.projectDirectory.dir('src/frontend')
+}
+
+war {
+    from(layout.projectDirectory.dir('src/frontend/dist').asFile) {
+        exclude('*.LICENSE.txt')
+        into('/fresh')
+    }
+}

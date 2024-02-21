@@ -1,6 +1,5 @@
 package jsp.experiments.frontend
 
-import com.sun.xml.internal.ws.util.StringUtils
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.provider.Property
@@ -10,7 +9,7 @@ class FrontendPlugin implements Plugin<Project> {
     void apply(Project project) {
         def taskName = {
             String name = it instanceof Property<String> ? it.get() : it
-            "npmRun${StringUtils.capitalize(name)}"
+            "npmRun${capitalize(name)}"
         }
 
         def extension = project.extensions.create(FrontendExtension, 'frontend', DefaultFrontendExtension) as DefaultFrontendExtension
@@ -47,5 +46,14 @@ class FrontendPlugin implements Plugin<Project> {
             project.tasks.named('test').get()
                     .dependsOn(taskName(extension.testTask))
         }
+    }
+
+    private static String capitalize(String name) {
+        if (name == null || name.length() == 0) {
+            return name
+        }
+        char[] chars = name.toCharArray()
+        chars[0] = Character.toUpperCase(chars[0])
+        return new String(chars)
     }
 }

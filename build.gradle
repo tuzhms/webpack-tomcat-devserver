@@ -27,7 +27,7 @@ frontend {
 
 war {
     from(layout.projectDirectory.dir('src/frontend/dist').asFile) {
-        exclude('*.LICENSE.txt')
+        exclude('**/*.LICENSE.txt')
         into('/fresh')
     }
 }
